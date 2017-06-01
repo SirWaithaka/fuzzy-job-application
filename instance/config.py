@@ -1,2 +1,3 @@
 SECRET_KEY="@#$%PLMNBHUYTFCXZSE&*"
-SQLALCHEMY_DATABASE_URI="mysql://root:kenzy@localhost:3306/fuzzy"
+SQLALCHEMY_DATABASE_URI="mysql://fuzzy:fuzzify@localhost:3306/fuzzy"
+SQLALCHEMY_TRACK_MODIFICATIONS=False
