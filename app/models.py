@@ -41,6 +41,42 @@ class User(UserMixin, db.Model):
         return "<User: {}>".format(self.username)
 
 
+class Job(db.Model):
+    """
+    Create a Job Post table
+    """
+
+    __tablename__ = "jobs"
+
+    id = db.Column(db.Integer, primary_key = True)
+    company = db.Column(db.String(60), index = True)
+    description = db.Column(db.Text)
+    position = db.Column(db.String(60), index = True)
+    email = db.Column(db.String(60), index = True)
+
+    def __repr__(self):
+        return '<Job {}>'.format(self.position)
+
+# class Roles(db.Model):
+#     """
+#     Create Roles table for the Roles
+#     required in a Job post
+#     """
+#
+#     __tablename__ = 'roles'
+#
+#     id = db.Column(db.Integer, primary_key = True)
+#     job_post_id = db.Column(db.Integer, db.ForeignKey('jobs.id'))
+#
+# class Skills(db.Model):
+#     """
+#     Create Skills table
+#     """
+#
+#     __tablename__ = 'skills'
+#
+#     id = db.Column(db.Integer, primary_key = True)
+
 # Set up user_loader
 @login_manager.user_loader
 def load_user(user_id):
