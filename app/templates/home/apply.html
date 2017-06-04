@@ -1,8 +1,11 @@
+{% import "bootstrap/wtf.html" as wtf %}
 {% extends "layout.html" %}
 {% block main %}
 <div class="content-section">
   <div class="center">
-    <h1>Home</h1>
+    {% if job %}
+      <h1>Apply for {{ job.position }}</h1>
+    {% endif %}
   </div>
 </div>
 {% endblock %}
