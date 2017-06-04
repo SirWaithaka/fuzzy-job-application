@@ -1,5 +1,7 @@
 .*/
 *.pyc
 __pycache__/
-migrations/
 */config.py
+mongo.py
+test.py
+/templates
