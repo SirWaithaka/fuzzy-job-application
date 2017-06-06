@@ -1,12 +1,7 @@
 from flask_wtf import FlaskForm
-from wtforms import FieldList, FormField, PasswordField, StringField, SubmitField, TextAreaField, ValidationError
+from wtforms import HiddenField, IntegerField, PasswordField, StringField, SubmitField, TextAreaField, ValidationError
 from wtforms.validators import DataRequired, Email, EqualTo
 
-"""
-Miniature forms used in FormField
-"""
-class RolesForm(FlaskForm):
-    role = StringField('Role Description', validators = [DataRequired()])
 
 
 """
@@ -16,6 +11,9 @@ class ApplicationForm(FlaskForm):
     """
     Allows users to apply for a position
     """
+    age = IntegerField("Age", validators=[DataRequired()])
+    skill_set = HiddenField(validators=[DataRequired()])
+    submit = SubmitField("Send Application")
 
 class JobPostForm(FlaskForm):
     """
@@ -25,4 +23,5 @@ class JobPostForm(FlaskForm):
     position = StringField('Position', validators = [DataRequired()])
     email = StringField('Email Contacts', validators = [DataRequired(), Email()])
     description = TextAreaField('Job Description', validators = [DataRequired()])
+    skill = HiddenField()
     submit = SubmitField('Submit')
