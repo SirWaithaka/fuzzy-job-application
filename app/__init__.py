@@ -10,6 +10,7 @@ from config import app_config
 
 # db variable initialization
 db = SQLAlchemy()
+migrate = Migrate()
 login_manager = LoginManager()
 
 def create_app(config):
@@ -19,12 +20,11 @@ def create_app(config):
 
     Bootstrap(app)
     db.init_app(app)
+    migrate.init_app(app, db)
 
     login_manager.init_app(app)
     login_manager.login_message = "You must login to acces this page"
     login_manager.login_view = "auth.login"
-
-    migrate = Migrate(app, db)
 
     from app import models
 
