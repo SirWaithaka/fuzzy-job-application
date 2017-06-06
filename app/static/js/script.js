@@ -13,7 +13,7 @@ $('onready', function(){
 
       skillset.push({skill});
 
-      console.log(JSON.stringify(skillset));
+      // console.log(JSON.stringify(skillset));
 
       $skill_skill_hidden_input.val(JSON.stringify(skillset));
 
