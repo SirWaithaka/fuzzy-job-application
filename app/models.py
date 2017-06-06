@@ -1,9 +1,28 @@
 # global imports
+import json
 from flask_login import UserMixin
+from sqlalchemy.ext.mutable import MutableDict
+from sqlalchemy.types import TypeDecorator, TEXT
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # local imports
 from app import db, login_manager
+
+class JsonEncodedDict(TypeDecorator):
+    """Enables JSON storage by encoding and decoding on the fly."""
+    impl = TEXT
+
+    def process_bind_param(self, value, dialect):
+        if value is not None:
+            value = json.dumps(value)
+
+        return value
+
+    def process_result_value(self, value, dialect):
+        if value is not None:
+            value = json.loads(value)
+        return value
+JsonType = MutableDict.as_mutable(JsonEncodedDict)
 
 class User(UserMixin, db.Model):
     """
@@ -16,6 +35,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(60), index = True, unique = True)
     username = db.Column(db.String(60), index = True, unique = True)
     password_hash = db.Column(db.String(128))
+    applications = db.relationship('Application', backref = 'vacancy', lazy='dynamic')
 
     @property
     def password(self):
@@ -49,24 +69,32 @@ class Job(db.Model):
     __tablename__ = "jobs"
 
     id = db.Column(db.Integer, primary_key = True)
-    company = db.Column(db.String(60), index = True)
-    description = db.Column(db.Text)
-    position = db.Column(db.String(60), index = True)
-    email = db.Column(db.String(60), index = True)
+    company = db.Column(db.String(60), index = True, nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    position = db.Column(db.String(60), index = True, nullable=False)
+    email = db.Column(db.String(60), index = True, nullable=False)
+    skills = db.Column(JsonType, nullable=False)
+    applications = db.relationship('Application', backref = 'job', lazy='dynamic')
 
     def __repr__(self):
         return '<Job {}>'.format(self.position)
 
-# class Roles(db.Model):
-#     """
-#     Create Roles table for the Roles
-#     required in a Job post
-#     """
-#
-#     __tablename__ = 'roles'
-#
-#     id = db.Column(db.Integer, primary_key = True)
-#     job_post_id = db.Column(db.Integer, db.ForeignKey('jobs.id'))
+
+
+class Application(db.Model):
+
+    __tablename__ = "applications"
+
+    id = db.Column(db.Integer, primary_key=True)
+    age = db.Column(db.Integer, index = True, nullable=False)
+    applicant_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    job_id = db.Column(db.Integer, db.ForeignKey('jobs.id'))
+    expertise = db.Column(JsonType, nullable=False)
+
+
+    def __repr__(self):
+        return "<Application {}>".format(self.id)
+
 #
 # class Skills(db.Model):
 #     """
@@ -76,6 +104,15 @@ class Job(db.Model):
 #     __tablename__ = 'skills'
 #
 #     id = db.Column(db.Integer, primary_key = True)
+#     data = db.Column(JsonType, nullable=False)
+#     # applicant_id = db.relationship('Application', backref='skills', lazy='dynamic')
+#
+#     def __init__(self, data):
+#         self.data = data
+#
+#     def __repr__(self):
+#         return '<Skills> %s' % (self.data)
+#
 
 # Set up user_loader
 @login_manager.user_loader
