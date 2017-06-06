@@ -1,11 +1,46 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% extends "layout.html" %}
+{% block title %}
+<title>Apply for {{ job.position }} at {{ job.company }}</title>
+{% endblock %}
+
+{% block scripts %}
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='js/jq-script.js') }}">
+</script>
+{% endblock %}
+
 {% block main %}
 <div class="content-section">
   <div class="center">
-    {% if job %}
-      <h1>Apply for {{ job.position }}</h1>
-    {% endif %}
+    <h1>Apply for Vacancy <small>{{ job.position }}</small></h1>
+    <h3>Description</h3>
+    <p>{{ job.description }}</p>
+    <br><br>
+    <div class="page-header">
+      <h2>Apply Here!</h2>
+    </div>
+    <form class="form" action="{{ url_for('home.apply', id=job.id) }}" method="post" role="form">
+      {{ form.hidden_tag() }}
+      {{ wtf.form_field(form.age) }}
+      {% for key, value in job.skills.items() %}
+
+        <div class="form-group" id="skill-radio">
+          <label for="{{item}}">
+            <p>{{value}}</p>
+            <br>
+          {% for i in range(1, 11) %}
+            <input style="margin:5px" type="radio" name="{{ key }}" value="{{i}}">{{i}}
+          {% endfor %}
+          </label>
+        </div>
+
+      {% endfor %}
+
+      {{ wtf.form_field(form.submit) }}
+    </form>
+
   </div>
 </div>
 {% endblock %}
