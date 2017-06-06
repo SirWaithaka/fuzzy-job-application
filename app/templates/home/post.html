@@ -1,12 +1,46 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% extends "layout.html" %}
-{% block title %}Post Job Vacancy{% endblock %}
+{% block title %}
+<title>Post Job Vacancy | Project Fuzzy</title>
+{% endblock %}
+{% block scripts %}
+<script
+  type="text/javascript"
+  src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}
 
 {% block main %}
 <div class="content-section">
   <div class="center">
     <h1>Post Job Vacancy</h1>
-    {{ wtf.quick_form(form) }}
+    <form class="form" action="{{ url_for('home.post') }}" method="post" role="form">
+      {{ form.hidden_tag() }}
+      {{ wtf.form_field(form.company) }}
+      {{ wtf.form_field(form.position) }}
+      {{ wtf.form_field(form.email) }}
+      {{ wtf.form_field(form.description) }}
+      <div class="form-group">
+        <label for="">Skill</label>
+        <input class="form-control" type="text" name="user-skill" value="">
+      </div>
+      <div class="form-group">
+        <button class="btn btn-sm" id="add-skill" type="button">Add Skill</button>
+      </div>
+      <div id="input-skills"></div>
+      <table class="table table-stripped table-bordered">
+        <thead>
+          <tr>
+            <td>No.</td>
+            <td>Experience</td>
+            <td>Remove</td>
+          </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+      {{ wtf.form_field(form.submit) }}
+    </form>
   </div>
 </div>
 {% endblock %}
