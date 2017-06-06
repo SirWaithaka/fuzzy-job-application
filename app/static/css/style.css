@@ -42,6 +42,15 @@ p.copyright {
   background-color: #aec251;
 }
 
+.btn-sm {
+  border-color: #aec251;
+  color: #aec251;
+}
+
+.btn-sm:hover {
+  background-color: #aec251;
+}
+
 .center {
   margin: auto;
   width: 50%;
