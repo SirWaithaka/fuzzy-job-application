@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block title %}
+<title>List Applicants</title>
+{% endblock %}
+
+{% block main %}
+<div class="content-section">
+  <div class="center">
+    <div class="page-header">
+      <h1>List of Applicants <small> Score Descending</small></h1>
+    </div>
+    <br>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Applicant's Name</th>
+          <th>Vacancy Applied To</th>
+          <th>Company</th>
+          <th>Score</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for app, poo, post in zip(applicants, exp, job_posts) %}
+          <tr>
+            <td>{{ app.username }}</td>
+            <td>{{ post.position }}</td>
+            <td>{{ post.company }}</td>
+            <td>{{ poo }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

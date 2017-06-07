@@ -95,25 +95,6 @@ class Application(db.Model):
     def __repr__(self):
         return "<Application {}>".format(self.id)
 
-#
-# class Skills(db.Model):
-#     """
-#     Create Skills table
-#     """
-#
-#     __tablename__ = 'skills'
-#
-#     id = db.Column(db.Integer, primary_key = True)
-#     data = db.Column(JsonType, nullable=False)
-#     # applicant_id = db.relationship('Application', backref='skills', lazy='dynamic')
-#
-#     def __init__(self, data):
-#         self.data = data
-#
-#     def __repr__(self):
-#         return '<Skills> %s' % (self.data)
-#
-
 # Set up user_loader
 @login_manager.user_loader
 def load_user(user_id):
