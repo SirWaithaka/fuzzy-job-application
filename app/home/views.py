@@ -24,7 +24,7 @@ def applicants():
 
     applicants = []
     job_posts = []
-    users_poo = []
+    users_skills = [] # contain skillset of all users
 
     applications = Application.query.all()
     for application in applications:
@@ -33,15 +33,16 @@ def applicants():
         job_post = Job.query.get_or_404(application.job_id)
         job_posts.append(job_post)
 
-        user_poo = []
+        # contains data about the user skills
+        user_skill = []
         for key, value in application.expertise.items():
-                user_poo.append(value)
+            user_skill.append(value)
 
-        users_poo.append(user_poo)
+        users_skills.append(user_skill)
 
     users_scores = []
-    for poo_list in users_poo:
-        users_scores.append(get_total_score(poo_list))
+    for skill in users_skills:
+        users_scores.append(get_total_score(skill))
 
     return render_template('home/applicants.html', applicants=applicants, exp=users_scores, job_posts=job_posts, zip=zip)
 
