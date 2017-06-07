@@ -84,4 +84,4 @@ def get_fuzzy_score(exp, max_score):
 
     return scoring.output['score']
 
-print(get_fuzzy_score(5, 20))
+print(get_fuzzy_score(10, 20))
