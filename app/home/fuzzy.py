@@ -29,6 +29,9 @@ def get_fuzzy_score(exp, max_score):
     score = ctrl.Consequent(np.arange(0.0, max_score, 0.1), 'score')
 
     # DECLARE Membership function for Antecedent
+    ## 'nov' = 'novice'
+    ## 'int' = 'intermediate'
+    ## 'pro' = 'professional'
     expertise['nov'] = fuzz.trimf(expertise.universe, [0, 0, 5])
     expertise['int'] = fuzz.trimf(expertise.universe, [0, 5, 10])
     expertise['pro'] = fuzz.trimf(expertise.universe, [5, 10, 10])
