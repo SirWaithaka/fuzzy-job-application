@@ -34,3 +34,6 @@ sudo apt-get install tk python3-tk tk8.6-dev
 ```
 
 Then run make for your python version to configure it with __tkinter_
+
+## Heroku branch
+This branch was deployed to heroku but seems like it does not support apps configured or running on tkinter
