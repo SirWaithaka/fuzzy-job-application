@@ -5,15 +5,45 @@ from flask_login import current_user, login_required
 from werkzeug.security import generate_password_hash
 
 from . import home
-# from .fuzzy import
+from .fuzzy import get_fuzzy_score, get_total_score
 from .forms import ApplicationForm, JobPostForm
 from .. import db
-from ..models import Application, Job
+from ..models import Application, Job, User
 
 @home.route('/')
 @login_required
 def index():
     return render_template('home/index.html')
+
+@home.route('/applicants')
+@login_required
+def applicants():
+    """
+    Return applicants with their fuzzy result
+    """
+
+    applicants = []
+    job_posts = []
+    users_poo = []
+
+    applications = Application.query.all()
+    for application in applications:
+        applicant = User.query.get_or_404(application.applicant_id)
+        applicants.append(applicant)
+        job_post = Job.query.get_or_404(application.job_id)
+        job_posts.append(job_post)
+
+        user_poo = []
+        for key, value in application.expertise.items():
+                user_poo.append(value)
+
+        users_poo.append(user_poo)
+
+    users_scores = []
+    for poo_list in users_poo:
+        users_scores.append(get_total_score(poo_list))
+
+    return render_template('home/applicants.html', applicants=applicants, exp=users_scores, job_posts=job_posts, zip=zip)
 
 @home.route('/apply/<int:id>',methods=['GET', 'POST'])
 @login_required
