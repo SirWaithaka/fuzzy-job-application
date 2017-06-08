@@ -29,13 +29,14 @@
           <ul class="nav navbar-nav navbar-right">
             {% if current_user.is_authenticated %}
               <li><a href="{{ url_for('home.jobs') }}">Jobs</a></li>
+              <li><a href="{{ url_for('home.applicants') }}">Applicants</a></li>
               <li><a href="{{ url_for('auth.logout') }}">Logout</a></li>
               <li><a href="#"><i class="fa fa-user">Hi, {{ current_user.username }}!</i></a></li>
 
             {% else %}
-            <li><a href="{{ url_for('home.index') }}">Home</a></li>
-            <li><a href="{{ url_for('auth.register') }}">Register</a></li>
-            <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+              <li><a href="{{ url_for('home.index') }}">Home</a></li>
+              <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+              <li><a href="{{ url_for('auth.login') }}">Login</a></li>
             {% endif %}
           </ul>
         </div>
