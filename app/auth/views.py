@@ -53,7 +53,7 @@ def logout():
     """
     Logout users
     """
-    logout_user
+    logout_user()
     flash("You have successfully been logged out.")
 
     # redirect to the login page
