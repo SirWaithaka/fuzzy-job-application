@@ -22,6 +22,23 @@ pip install -r requirements.txt
 export FLASK_APP=run.py
 export FLASK_CONFIG=development
 
+```
+
+This is the basic setup for the flask application.
+
+
+Next we create our mysql models.
+Fire up the mysql server
+
+``` bash
+sudo service mysql start
+
+flask db upgrade
+```
+Running the above command should be successful without any errors.
+After this we can then run our web app.
+
+``` bash
 flask run
 ```
 
